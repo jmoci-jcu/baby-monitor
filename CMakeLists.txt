@@ -55,7 +55,7 @@ if(CrossCompiling)
         src/example_scripts/led_example.cpp
         src/example_scripts/accelerometer_example.cpp
         src/drivers/logging/logging.cpp
-        src/drivers/led.cpp
+        src/drivers/led/led.cpp
         src/drivers/accelerometer/accelerometer.cpp
         src/drivers/microphone/microphone.cpp
         src/example_scripts/fft_example.cpp
