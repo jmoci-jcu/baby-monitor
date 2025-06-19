@@ -1,0 +1,4 @@
+namespace accelerometerexample
+{
+    void run();
+}
