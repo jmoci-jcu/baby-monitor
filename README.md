@@ -1,5 +1,7 @@
 # Code organisation 
 
+Code to run on daughterboards
+
 | Path                       | Description                                             |
 | -------------------------- | ------------------------------------------------------- |
 | `src`                      | Main program source code                                |
