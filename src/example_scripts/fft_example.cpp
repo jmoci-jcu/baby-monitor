@@ -9,7 +9,7 @@
 
 #include "hardware_params.h"
 #include "drivers/microphone/microphone.h"
-#include "drivers/led.h"
+#include "drivers/led/led.h"
 #include "example_scripts/fft_example.h"
 #include "constants.h"
 
