@@ -17,10 +17,26 @@ class SoundLevelAlert : public logger::Loggable{
     SoundLevelAlert();
     std::string getLogString() override;
 };
+class VibrationLevelAlert : public logger::Loggable{
+    public:
+    VibrationLevelAlert();
+    std::string getLogString() override;
+};
+class MotionAlert : public logger::Loggable{
+    public:
+    MotionAlert();
+    std::string getLogString() override;
+};
 class TemperatureLevel : public logger::Loggable{
     public:
     uint8_t temperature;
     TemperatureLevel(uint8_t temperature);
+    std::string getLogString() override;
+};
+class HumidityLevel : public logger::Loggable{
+    public:
+    uint8_t humidity;
+    HumidityLevel(uint8_t humidity);
     std::string getLogString() override;
 };
 
