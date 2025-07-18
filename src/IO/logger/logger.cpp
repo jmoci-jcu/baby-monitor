@@ -27,7 +27,7 @@ namespace logger{
     MotionAlert::MotionAlert(){
         classifier = "Motion Threshold";
     };
-    std::string VibrationLevelAlert::getLogString() {
+    std::string MotionAlert::getLogString() {
         uint32_t time_ms = to_ms_since_boot(get_absolute_time());
         char stringBuff[128];
         std::sprintf(stringBuff,"%u-%s\n", time_ms, classifier.c_str());
