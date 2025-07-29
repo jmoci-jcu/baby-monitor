@@ -9,7 +9,6 @@
 
 #include "example_scripts/led_example.h"
 #include "example_scripts/accelerometer_example.h"
-#include "example_scripts/fft_example.h"
 
 #include "IO/logger/logger.h"
 
