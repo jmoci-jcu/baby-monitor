@@ -15,7 +15,6 @@
 #include "drivers/microphone/microphone.h"
 #include "drivers/led/led.h"
 
-
 int main(){
    //Init
    stdio_init_all();
@@ -23,7 +22,7 @@ int main(){
    accel_driver::init();
    mic_driver::init(1087);
    gpio_init(SWITCH_GPIO);
-   gpio_set_dir(SWITCH_GPIO,false);
+   gpio_set_dir(SWITCH_GPIO,GPIO_IN);
 
    //Run each example until switch is pressed
    //delay after switch press to avoid multi press
@@ -42,7 +41,6 @@ int main(){
          fftexample::run();
       }
       led_driver::resetAll();
-      sleep_ms(500);
    }
    
 }

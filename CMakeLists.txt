@@ -60,7 +60,7 @@ if(CrossCompiling)
         src/drivers/microphone/microphone.cpp
         src/example_scripts/fft_example.cpp
 
-        src/IO/logger.cpp
+        src/IO/logger/logger.cpp
     )
     target_include_directories(labs
         PUBLIC 
