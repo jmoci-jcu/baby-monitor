@@ -30,3 +30,8 @@
 
 //switch
 #define SWITCH_GPIO 15
+
+//flash
+#define RESERVED_PROGRAM_SIZE (1024 * 1024) // 1 MB of 16MB arbitrarily reserved for program
+#define PAGE_SIZE_BYTES (256) // 256 bytes per page
+#define SECTOR_SIZE_BYTES (4096) // 4 KB per sector
