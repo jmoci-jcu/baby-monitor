@@ -19,18 +19,23 @@ static void motion_gpio_callback(uint gpio, uint32_t events) {
 
 // Initialize the PIR motion detector
 void init_motion_sensor() {
-    // Configure pin as input with pull-up
+    // 1) Configure the pin as an input
     gpio_init(MOTION_GPIO);
     gpio_set_dir(MOTION_GPIO, GPIO_IN);
+
+    // 2) Enable the internal pull-up (so it idles HIGH)
     gpio_pull_up(MOTION_GPIO);
 
-    // Enable falling-edge IRQ with our callback
+    // 3) Arm FALLING edge interrupts
     gpio_set_irq_enabled_with_callback(
         MOTION_GPIO,
         GPIO_IRQ_EDGE_FALL,
         true,
         motion_gpio_callback
     );
+
+    // 4) Debug print
+    printf("Motion sensor initialized on GPIO %d\n", MOTION_GPIO);
 }
 
 /*

@@ -26,6 +26,9 @@ int main(){
   init_motion_sensor();  
 
 
+      while (true) {
+        tight_loop_contents();
+      }
 
    return 0;
 }
