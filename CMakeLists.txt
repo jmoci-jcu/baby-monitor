@@ -46,6 +46,10 @@ if(CrossCompiling)
     # set(CONFIGTABLE ON)
     # set(RFFT_Q15_1024 ON) # which FFT constants are hard-coded into the app
     # add_subdirectory(lib/CMSIS-DSP/Source bin_dsp)
+    add_library(littlefs STATIC
+        libs/littlefs/lfs.c
+        libs/littlefs/lfs_util.c
+    )
 
     add_executable(labs)
     target_sources(labs 
@@ -57,12 +61,14 @@ if(CrossCompiling)
         src/drivers/led/led.cpp
         src/drivers/accelerometer/accelerometer.cpp
         src/drivers/microphone/microphone.cpp
+        src/drivers/flash/flash.cpp
 
         src/IO/logger/logger.cpp
     )
     target_include_directories(labs
         PUBLIC 
         src/
+        libs/littlefs/
     )
 
     pico_set_program_name(labs "cc3501-labs")
@@ -78,6 +84,7 @@ if(CrossCompiling)
     # Add the standard library to the build
     target_link_libraries(labs
         #CMSISDSP
+        littlefs
         pico_stdlib
         hardware_spi
         hardware_i2c
@@ -89,6 +96,7 @@ if(CrossCompiling)
         hardware_watchdog
         hardware_clocks
         hardware_pwm
+        hardware_flash
     )
 
     pico_add_extra_outputs(labs)
@@ -113,11 +121,16 @@ else()
         tests/mocks/hardware/pio.cpp
         tests/mocks/ws2812.cpp
     )
+    add_library(littlefs STATIC
+        external/littlefs/lfs.c
+        external/littlefs/lfs_util.c
+    )
     target_include_directories(labs
         PUBLIC 
         src/
         tests/
         tests/mocks/
+        libs/littlefs/
     )
     target_compile_definitions(labs 
         PUBLIC

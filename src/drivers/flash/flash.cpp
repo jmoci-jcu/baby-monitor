@@ -1,32 +1,22 @@
 #include "flash.h"
-#include "hardware/flash.h"
+#include "hardware_params.h"
 
-using namespace flashDriver;
-void writeLog(const std::string& log) {
-
-    
-
-    //get data
-    //write to first page
-    //write to second page
-    //...
-    //update pointer
-
-    //write to first page
-    //check how many bytes are free
-    //check how many bytes we need
-    //write x bytes, whichever is lower
-
-    //write to second page
-    //check how many bytes are free
-    //check how many bytes we need
-    //write x bytes, whichever is lower
-    
+int flashDriver::read(const struct lfs_config *c, lfs_block_t block,lfs_off_t off, void *buffer, lfs_size_t size){
+    uint32_t addr = FLASH_BASE + block * c->block_size + off;
+    memcpy(buffer,(const void *)addr, size);
+    return 0;
 }
-std::string readLogs() {
-    std::string logs;
-    for(int32_t* addr = RESERVED_BASE_ADDRESS; addr < FLASH_POINTER; addr++){
-        //iterate over each byte
-        logs += ((char)*addr);
-    }
+int flashDriver::prog(const struct lfs_config *c, lfs_block_t block,lfs_off_t off, const void *buffer, lfs_size_t size){
+    uint32_t addr = FLASH_RESERVED_PROGRAM_BLOCKS*FLASH_BLOCK_WIDTH_BYTES + block * c->block_size + off; //all program operations will be a multiple of program size
+    flash_range_program(addr,(uint8_t*)buffer,size);
+    return 0;
+}
+int flashDriver::erase(const struct lfs_config *c, lfs_block_t block){
+    uint32_t addr = FLASH_RESERVED_PROGRAM_BLOCKS*FLASH_BLOCK_WIDTH_BYTES + block * c->block_size;
+    flash_range_erase(addr,4096);
+    return 0;
+}
+int flashDriver::sync(const struct lfs_config *c){
+    //Our driver is simple. We can do nothing.
+    return 0;
 }
