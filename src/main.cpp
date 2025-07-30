@@ -14,21 +14,27 @@
 
 #include "sensors/motion.h"
 
+#define TEST_GPIO 19
 
 using namespace logger;
-      
-int main(){
+
+int main()
+{
 
    stdio_init_all();
+   // init_motion_sensor();
    HumidityLevel humidityLevel = HumidityLevel(10);
    log(humidityLevel);
+// Configure GPIO19 as input with internal pull‑up (idles HIGH)
+    gpio_init(TEST_GPIO);
+    gpio_set_dir(TEST_GPIO, GPIO_IN);
+    gpio_set_pulls(TEST_GPIO, false, true);
 
-  init_motion_sensor();  
-
-
-      while (true) {
-        tight_loop_contents();
-      }
-
-   return 0;
+    while (true) {
+        bool level = gpio_get(TEST_GPIO);
+        // print numeric or human‑readable state
+        printf("GPIO19 is %s\n", level ? "HIGH" : "LOW");
+        // or: printf("%d\n", level);
+        sleep_ms(500);  // sample every 50 ms (20 Hz); lower for faster updates
+    }
 }
