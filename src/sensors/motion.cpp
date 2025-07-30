@@ -12,6 +12,10 @@ static constexpr uint MOTION_GPIO = 19;
 // GPIO IRQ callback: logs a MotionAlert on falling edge
 static void motion_gpio_callback(uint gpio, uint32_t events) {
     if (gpio == MOTION_GPIO && (events & GPIO_IRQ_EDGE_FALL)) {
+        // Debug print to confirm the ISR is hit
+        printf(">>> PIR callback fired! gpio=%u events=0x%08x\n", gpio, events);
+
+        // Now your existing alert
         logger::MotionAlert alert;
         logger::log(alert);
     }
