@@ -9,7 +9,7 @@
 #include "hardware_params.h"
 #include "accelerometer_example.h"
 #include "drivers/accelerometer/accelerometer.h"
-#include "drivers/led.h"
+#include "drivers/led/led.h"
 
 void accelerometerexample::run()
 {

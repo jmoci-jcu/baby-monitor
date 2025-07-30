@@ -1,4 +1,0 @@
-namespace fftexample
-{
-    void run();
-}
