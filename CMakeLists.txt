@@ -97,6 +97,7 @@ if(CrossCompiling)
         hardware_clocks
         hardware_pwm
         hardware_flash
+        hardware_sync
     )
 
     pico_add_extra_outputs(labs)
