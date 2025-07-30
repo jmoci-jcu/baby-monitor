@@ -30,3 +30,8 @@
 
 //switch
 #define SWITCH_GPIO 15
+
+
+//JOB: accelerometer program must be made
+
+// print out when vibration is detected
