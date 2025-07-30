@@ -7,6 +7,13 @@
 
 //Accelerometer
 #define ACCEL_I2C &i2c0_inst
+// accelerometer I2C configuration
+#define I2C_INSTANCE i2c0
+#define SDA_PIN 16
+#define SCL_PIN 17
+#define ACCEL_I2C_ADDRESS 0x19
+#define ACCEL_CTRL_REG_1 0x20
+
 
 //slave addr
 #define ACCEL_SDA 0x19
