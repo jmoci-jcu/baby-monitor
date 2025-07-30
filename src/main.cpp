@@ -12,6 +12,9 @@
 
 #include "IO/logger/logger.h"
 
+#include "sensors/motion.h"
+
+
 using namespace logger;
       
 int main(){
@@ -19,6 +22,10 @@ int main(){
    stdio_init_all();
    HumidityLevel humidityLevel = HumidityLevel(10);
    log(humidityLevel);
+
+  init_motion_sensor();  
+
+
 
    return 0;
 }
