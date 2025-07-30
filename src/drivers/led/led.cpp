@@ -6,7 +6,6 @@
 #include "led.h"
 #include "hardware_params.h"
 
-
 uint32_t led_data[LED_COUNT];
 
 void led_driver::update(){

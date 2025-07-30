@@ -34,12 +34,12 @@ uint8_t read_from_reg(uint8_t register_address){
     ret = i2c_write_blocking(ACCEL_I2C,ACCEL_SDA,&register_address,1,true);
     if(ret==PICO_ERROR_GENERIC){
         printf("accellerometer.cpp - read_from_reg() writing to I2C failed");
-        return;
+        return 0;
     }
     ret = i2c_read_blocking(ACCEL_I2C,ACCEL_SDA,&reading,1,false);
     if(ret==PICO_ERROR_GENERIC){
         printf("accellerometer.cpp - read_from_reg() reading from I2C failed");
-        return;
+        return 0;
     }
     return reading;
 }
