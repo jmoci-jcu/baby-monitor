@@ -29,7 +29,10 @@ const struct lfs_config cfg = {
 .lookahead_size = 64,
 };
 
+// Append a log to the log file on flash
 int writeNewLog(std::string log);
+
+// Retrive contents of the log file and clear it
 std::string flushLogs();
 
 };
