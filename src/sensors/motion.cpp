@@ -9,16 +9,17 @@
 // PIR output connected to GPIO19
 #define MOTION_GPIO 19
 
-// GPIO IRQ callback: logs a MotionAlert on falling edge
+// GPIO IRQ callback: logs a MotionAlert on rising edge
 static void motion_gpio_callback(uint gpio, uint32_t events) {
-    if (events & GPIO_IRQ_EDGE_FALL) {
+    if (events & GPIO_IRQ_EDGE_RISE) {
         // confirm we hit the ISR
-        printf(">>> PIR falling‑edge! gpio=%u events=0x%08x\n", gpio, events);
+        printf(">>> PIR rising‑edge! gpio=%u events=0x%08x\n", gpio, events);
         // log your motion alert
         logger::MotionAlert alert;
         logger::log(alert);
     }
 }
+
 
 // Initialize the PIR motion detector
 void init_motion_sensor()
@@ -27,16 +28,20 @@ void init_motion_sensor()
     gpio_init(MOTION_GPIO);
     gpio_set_dir(MOTION_GPIO, GPIO_IN);
 
-    // 3) Arm FALLING edge interrupts
+    // 2) Optionally, enable pull-down if the PIR idles low
+    gpio_pull_down(MOTION_GPIO);
+
+    // 3) Arm RISING edge interrupts (0V → 3.3V transition)
     gpio_set_irq_enabled_with_callback(
         MOTION_GPIO,
-        GPIO_IRQ_EDGE_FALL, // detect 3.3 V → 0 V
+        GPIO_IRQ_EDGE_RISE,
         true,
         motion_gpio_callback);
 
     // 4) Debug print
-    printf("Motion sensor initialized on GPIO %d\n", MOTION_GPIO);
+    printf("Motion sensor initialized on GPIO %d (rising-edge)\n", MOTION_GPIO);
 }
+
 
 /*
 Usage (e.g., in main.cpp):
