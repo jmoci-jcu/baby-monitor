@@ -31,7 +31,28 @@ bool setup_accelerometer()
     return true;
 }
 
-// Reads the accelerometer and fills the axis array with G-force values
+// Fills an array 'axis' with [x,y,z] values
+void read_axis(int16_t *axis)
+{
+    uint8_t data[6];
+    read_registers(ACCEL_OUT_X_L, data, 6); // Read 6 bytes starting from OUT_X_L
+    // Combine low and high bytes for each axis
+    axis[0] = (int16_t)((data[1] << 8) | data[0]); // X-axis
+    axis[1] = (int16_t)((data[3] << 8) | data[2]); // Y-axis
+    axis[2] = (int16_t)((data[5] << 8) | data[4]); // Z-axis
+}
+
+
+void read_registers(uint8_t reg, uint8_t *data, int length)
+{
+    if (length > 1)
+    {
+        reg |= 0b10000000; // Set the read bit for multiple registers
+    }
+    i2c_write_blocking(I2C_INSTANCE, ACCEL_I2C_ADDRESS, &reg, 1, true);
+    i2c_read_blocking(I2C_INSTANCE, ACCEL_I2C_ADDRESS, data, length, false);
+}
+
 void read_axis_Gforce(float *axis)
 {
     uint8_t data[6];
@@ -47,15 +68,8 @@ void read_axis_Gforce(float *axis)
     axis[2] /= 16384.0;
 }
 
-void read_registers(uint8_t reg, uint8_t *data, int length)
-{
-    if (length > 1)
-    {
-        reg |= 0b10000000; // Set the read bit for multiple registers
-    }
-    i2c_write_blocking(I2C_INSTANCE, ACCEL_I2C_ADDRESS, &reg, 1, true);
-    i2c_read_blocking(I2C_INSTANCE, ACCEL_I2C_ADDRESS, data, length, false);
-}
+
+
 
 //WRITE
 void write_register(uint8_t reg, uint8_t value)
@@ -65,16 +79,6 @@ void write_register(uint8_t reg, uint8_t value)
 }
 
 
-void main_loop(){
-    while (true){
-        float g_buffer[3]; // Buffer to hold G-force values
-            read_axis_Gforce(g_buffer);
-            printf("G-Force - X: %i, Y: %i, Z: %i\n", g_buffer[0], g_buffer[1], g_buffer[2]);
-            //notice %i might be incorrect, as g_buffer is a float array, so it should be %f
-        sleep_ms(100);
-        end_task = false;
-    }
-}
 
 
 

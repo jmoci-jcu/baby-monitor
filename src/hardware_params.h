@@ -14,16 +14,16 @@
 #define ACCEL_I2C_ADDRESS 0x19
 #define ACCEL_CTRL_REG_1 0x20
 
-
 //slave addr
 #define ACCEL_SDA 0x19
+
 
 //registers
 #define ACCEL_FIFO_SRC 0x2F
 #define ACCEL_FIFO_CTRL 0x2E
 #define ACCEL_CTRL_1 0x20
 
-//xyz
+//xyz register addresses for accelerometer
 #define ACCEL_OUT_X_L 0x28
 #define ACCEL_OUT_X_H 0x29
 #define ACCEL_OUT_Y_L 0x2A
