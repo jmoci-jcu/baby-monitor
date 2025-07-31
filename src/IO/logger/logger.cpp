@@ -1,6 +1,8 @@
 #include "logger.h"
 #include "stdio.h"
 
+#include "drivers/flash/flash.h"
+
 namespace logger{
     SoundLevelAlert::SoundLevelAlert(){
         classifier = "Sound Threshold";
@@ -64,6 +66,9 @@ namespace logger{
     void log(Loggable& logData){
         uint32_t time_ms = to_ms_since_boot(get_absolute_time());
         std::string logString = logData.getLogString();
-        printf("%s",logString.c_str());
+        //printf("%s",logString.c_str());
+
+        //assume not in bt mode for now
+        flashDriver::writeNewLog(logString);
     }
 }

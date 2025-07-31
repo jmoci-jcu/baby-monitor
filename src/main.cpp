@@ -13,17 +13,27 @@
 
 #include "IO/logger/logger.h"
 #include "drivers/flash/flash.h"
+#include "IO/uart_terminal/uart_terminal.h"
 
 using namespace logger;
 using namespace flashDriver;
 
-
 int main(){
 
+   //leave this little block here (put all initialization here)
    stdio_init_all();
+   UartTerminal::init();
 
-   flashDriver::writeNewLog();
-
+   //test code for logging
+   for(int i = 0; i < 10; i++){
+      HumidityLevel hlevel = HumidityLevel(i);
+      log(hlevel);
+   }
+   
+   //hang (so interrupts can fire after main has run)
+   while(true){
+      sleep_ms(1);
+   }
 
    return 0;
 }

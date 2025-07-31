@@ -29,6 +29,7 @@ const struct lfs_config cfg = {
 .lookahead_size = 64,
 };
 
-int writeNewLog();
+int writeNewLog(std::string log);
+std::string flushLogs();
 
 };
