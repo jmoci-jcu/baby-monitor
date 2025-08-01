@@ -13,24 +13,31 @@
 #include "IO/logger/logger.h"
 
 #include "sensors/motion.h"
+#include "sensors/hdc2010_sensor.h"
 
 
 using namespace logger;
 
 int main() {
-
     stdio_init_all();
     sleep_ms(2000);
 
-    // Initialize PIR motion sensor on GPIO19
+    setLogLevel(INFORMATION);
+
+    // PIR motion sensor
     init_motion_sensor();
 
-    // Log an initial humidity level (e.g., 10%)
-    HumidityLevel humidityLevel(10);
-    log(humidityLevel);
+    // *** Start the ~10 s HDC2010 sampler ***
+    hdc2010_sensor_init();
 
-    // Main loop: idle, waiting for interrupts
+    // Remove the old placeholder humidity log:
+    // HumidityLevel humidityLevel(10);
+    // log(humidityLevel);
+
     while (true) {
+        // Will log two lines (Temp + Humidity) about every 10 seconds.
+        hdc2010_sensor_task();
+
         tight_loop_contents();
     }
 

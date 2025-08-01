@@ -58,6 +58,8 @@ if(CrossCompiling)
         src/drivers/accelerometer/accelerometer.cpp
         src/drivers/microphone/microphone.cpp
         src/sensors/motion.cpp
+        src/drivers/HDC2010/hdc2010.cpp
+        src/sensors/hdc2010_sensor.cpp
 
         src/IO/logger/logger.cpp
     )
