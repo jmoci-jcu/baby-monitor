@@ -63,6 +63,7 @@ if(CrossCompiling)
         src/drivers/microphone/microphone.cpp
         src/drivers/flash/flash.cpp
         src/IO/uart_terminal/uart_terminal.cpp
+        src/sensors/motion.cpp
         src/IO/logger/logger.cpp
     )
     target_include_directories(labs

@@ -15,6 +15,9 @@
 #include "drivers/flash/flash.h"
 #include "IO/uart_terminal/uart_terminal.h"
 
+#include "sensors/motion.h"
+
+
 using namespace logger;
 using namespace flashDriver;
 
@@ -22,6 +25,7 @@ int main(){
 
    //leave this little block here (put all initialization here)
    stdio_init_all();
+   init_motion_sensor();
    UartTerminal::init();
 
    //test code for logging
@@ -34,6 +38,5 @@ int main(){
    while(true){
       sleep_ms(1);
    }
-
-   return 0;
+    return 0;  // never reached
 }
