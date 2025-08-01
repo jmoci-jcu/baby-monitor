@@ -4,6 +4,7 @@
 #include <array>
 #include "WS2812.pio.h" // This header file gets produced during compilation from the WS2812.pio file
 #include "drivers/logging/logging.h"
+#include "lfs.h"
 
 #include "hardware_params.h"
 
@@ -11,28 +12,31 @@
 #include "example_scripts/accelerometer_example.h"
 
 #include "IO/logger/logger.h"
+#include "drivers/flash/flash.h"
+#include "IO/uart_terminal/uart_terminal.h"
 
 #include "sensors/motion.h"
 
 
 using namespace logger;
+using namespace flashDriver;
 
-int main() {
+int main(){
 
-    stdio_init_all();
-    sleep_ms(2000);
+   //leave this little block here (put all initialization here)
+   stdio_init_all();
+   init_motion_sensor();
+   UartTerminal::init();
 
-    // Initialize PIR motion sensor on GPIO19
-    init_motion_sensor();
-
-    // Log an initial humidity level (e.g., 10%)
-    HumidityLevel humidityLevel(10);
-    log(humidityLevel);
-
-    // Main loop: idle, waiting for interrupts
-    while (true) {
-        tight_loop_contents();
-    }
-
+   //test code for logging
+   for(int i = 0; i < 10; i++){
+      HumidityLevel hlevel = HumidityLevel(i);
+      log(hlevel);
+   }
+   
+   //hang (so interrupts can fire after main has run)
+   while(true){
+      sleep_ms(1);
+   }
     return 0;  // never reached
 }
