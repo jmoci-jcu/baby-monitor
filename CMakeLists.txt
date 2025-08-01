@@ -57,6 +57,7 @@ if(CrossCompiling)
         src/drivers/led/led.cpp
         src/drivers/accelerometer/accelerometer.cpp
         src/drivers/microphone/microphone.cpp
+        src/sensors/motion.cpp
 
         src/IO/logger/logger.cpp
     )

@@ -12,13 +12,27 @@
 
 #include "IO/logger/logger.h"
 
+#include "sensors/motion.h"
+
+
 using namespace logger;
-      
-int main(){
 
-   stdio_init_all();
-   HumidityLevel humidityLevel = HumidityLevel(10);
-   log(humidityLevel);
+int main() {
 
-   return 0;
+    stdio_init_all();
+    sleep_ms(2000);
+
+    // Initialize PIR motion sensor on GPIO19
+    init_motion_sensor();
+
+    // Log an initial humidity level (e.g., 10%)
+    HumidityLevel humidityLevel(10);
+    log(humidityLevel);
+
+    // Main loop: idle, waiting for interrupts
+    while (true) {
+        tight_loop_contents();
+    }
+
+    return 0;  // never reached
 }
