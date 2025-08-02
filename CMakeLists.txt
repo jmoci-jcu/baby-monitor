@@ -62,6 +62,7 @@ if(CrossCompiling)
         src/drivers/accelerometer/accelerometer.cpp
         src/drivers/microphone/microphone.cpp
         src/drivers/flash/flash.cpp
+        src/drivers/bluetooth/bluetooth.cpp
         src/IO/uart_terminal/uart_terminal.cpp
         src/IO/logger/logger.cpp
     )
@@ -98,6 +99,7 @@ if(CrossCompiling)
         hardware_pwm
         hardware_flash
         hardware_sync
+        hardware_uart
     )
 
     pico_add_extra_outputs(labs)

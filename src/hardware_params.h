@@ -43,3 +43,8 @@
 //uart
 #define UART_INSTANCE uart0
 #define UART_INSTANCE_IRQ UART0_IRQ
+
+//bluetooth
+#define BT_GPIO_TX 8
+#define BT_GPIO_RX 9
+#define BT_UART_INSTANCE uart1
