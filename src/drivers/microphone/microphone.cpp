@@ -16,6 +16,10 @@ namespace mic_driver{
     }
     std::vector<uint16_t> read(uint16_t nSamples){
         std::vector<uint16_t> reads;
+        
+        // Reserve space for the number of samples to avoid reallocations
+        reads.reserve(nSamples);
+
         adc_run(true);
         for(int i = 0; i<nSamples; i++){
             reads.push_back(adc_fifo_get_blocking());
