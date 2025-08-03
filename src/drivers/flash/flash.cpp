@@ -26,7 +26,7 @@ int flashDriver::erase(const struct lfs_config *c, lfs_block_t block){
     return 0;
 }
 int flashDriver::sync(const struct lfs_config *c){
-    //Our driver is simple. We can do nothing.
+    //Our driver is simple. We dont need to do anything.
     return 0;
 }
 std::string flashDriver::flushLogs(){

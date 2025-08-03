@@ -2,6 +2,7 @@
 #include "stdio.h"
 
 #include "drivers/flash/flash.h"
+#include "drivers/bluetooth/bluetooth.h"
 
 namespace logger{
     SoundLevelAlert::SoundLevelAlert(){
@@ -66,9 +67,17 @@ namespace logger{
     void log(Loggable& logData){
         uint32_t time_ms = to_ms_since_boot(get_absolute_time());
         std::string logString = logData.getLogString();
-        //printf("%s",logString.c_str());
+        //todo maybe checking only when a log is sent is not good enough. Maybe we should flush logs also when
+        //a new connection is detected.
+        if(bluetoothDriver::executeCommand("GK") != "none"){
+            //bluetooth is connected
+            bluetoothDriver::sendLog(logString);
+            //todo check if any logs are stored in flash, if so, send them instead of flush.
+            printf("%s",flashDriver::flushLogs().c_str());
 
-        //assume not in bt mode for now
-        flashDriver::writeNewLog(logString);
+        }else{
+            //bluetooth is not connected
+            flashDriver::writeNewLog(logString);
+        }
     }
 }
