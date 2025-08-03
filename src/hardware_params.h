@@ -1,3 +1,6 @@
+#pragma once
+#include "hardware/flash.h"
+
 //LED
 #define LED_PIO pio0
 #define LED_GPIO 14
@@ -32,6 +35,16 @@
 #define SWITCH_GPIO 15
 
 //flash
-#define RESERVED_PROGRAM_SIZE (1024 * 1024) // 1 MB of 16MB arbitrarily reserved for program
-#define PAGE_SIZE_BYTES (256) // 256 bytes per page
-#define SECTOR_SIZE_BYTES (4096) // 4 KB per sector
+#define FLASH_RESERVED_PROGRAM_BLOCKS 256
+#define FLASH_PAGE_WIDTH_BYTES 256
+#define FLASH_BLOCK_WIDTH_BYTES 16*FLASH_PAGE_WIDTH_BYTES
+#define FLASH_BASE (XIP_BASE + FLASH_RESERVED_PROGRAM_BLOCKS * FLASH_BLOCK_WIDTH_BYTES)
+
+//uart
+#define UART_INSTANCE uart0
+#define UART_INSTANCE_IRQ UART0_IRQ
+
+//bluetooth
+#define BT_GPIO_TX 8
+#define BT_GPIO_RX 9
+#define BT_UART_INSTANCE uart1

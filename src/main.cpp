@@ -5,6 +5,7 @@
 #include "WS2812.pio.h" // This header file gets produced during compilation from the WS2812.pio file
 #include "drivers/logging/logging.h"
 #include "drivers/microphone/microphone.h"
+#include "lfs.h"
 
 #include "hardware_params.h"
 
@@ -12,9 +13,14 @@
 #include "example_scripts/accelerometer_example.h"
 
 #include "IO/logger/logger.h"
+#include "drivers/flash/flash.h"
+#include "IO/uart_terminal/uart_terminal.h"
+
+#include "sensors/motion.h"
+
 
 using namespace logger;
-// threshold = 100.0f
+using namespace flashDriver;
 
 int main(){
     stdio_init_all();
@@ -34,7 +40,6 @@ int main(){
     
     return 0;
 }
-
 
 
 
