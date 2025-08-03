@@ -51,11 +51,13 @@ if(CrossCompiling)
     target_sources(labs 
         PUBLIC
         src/main.cpp
+
         src/example_scripts/led_example.cpp
         src/drivers/logging/logging.cpp
         src/drivers/led/led.cpp
         src/drivers/accelerometer/accelerometer.cpp
         src/drivers/microphone/microphone.cpp
+        src/monitors/vibrations_alarm.cpp
 
         src/IO/logger/logger.cpp
     )
