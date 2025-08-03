@@ -94,6 +94,7 @@ if(CrossCompiling)
         hardware_pwm
     )
 
+
     pico_add_extra_outputs(labs)
 
 else()
@@ -105,6 +106,9 @@ else()
     project(cc3501-labs CXX)
 
     add_executable(labs)
+
+    target_link_options(labs PRIVATE -Wl,-u,_printf_float)
+    
     target_sources(labs 
         PUBLIC
         src/main.cpp
