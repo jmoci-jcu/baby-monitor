@@ -50,6 +50,7 @@ namespace mic_driver{
         return std::sqrt(sum_of_squares / samples.size());
     }
 
+    // Monitor audio level and log if it exceeds the threshold
     bool monitor_audio_level(float threshold) {
         auto samples = read(DETECTION_WINDOW_SIZE);
         float rms_level = calculate_rms(samples);
@@ -62,5 +63,6 @@ namespace mic_driver{
         }
         return false;
     }
+
 
 }
