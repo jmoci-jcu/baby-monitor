@@ -19,27 +19,32 @@
 #include "sensors/motion.h"
 
 
+
 using namespace logger;
 using namespace flashDriver;
 
+
 int main(){
-    stdio_init_all();
-    
-    // Initialize microphone
-    mic_driver::init(4800);
-    
-    printf("Microphone detection started...\n");
-    
-    // Main loop
-    while (true) {
-         if (mic_driver::monitor_audio_level(100.0f)) { 
+
+   //leave this little block here (put all initialization here)
+   stdio_init_all();
+   init_motion_sensor();
+   UartTerminal::init();
+   mic_driver::init(4800);
+
+   //test code for logging
+   for(int i = 0; i < 10; i++){
+      HumidityLevel hlevel = HumidityLevel(i);
+      log(hlevel);
+   }
+   
+   //hang (so interrupts can fire after main has run)
+   while(true){
+    if (mic_driver::monitor_audio_level(100.0f)) { 
             printf("Baby activity detected!\n");
          }
-        sleep_ms(10);
-    }
-    
-    return 0;
+   }
+    return 0;  // never reached
 }
-
 
 
