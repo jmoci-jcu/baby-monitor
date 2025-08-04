@@ -32,21 +32,21 @@ int main(){
    //leave this little block here (put all initialization here)
    stdio_init_all();
    bluetoothDriver::init();
-    init_motion_sensor();
-    setup_accelerometer();
-//    UartTerminal::init();
+   init_motion_sensor();
+   setup_accelerometer();
+   //UartTerminal::init();
    mic_driver::init(4800);
    hdc2010_sensor_init();
+   Logger::init();
   
    setLogLevel(INFORMATION);
 
    
    //hang (so interrupts can fire after main has run)
    while(true){
-    //Logger::flushLogBuffer(); // Flush the log buffer to ensure all logs are sent
-    vibrations_alarm();
-    sound_sensor_task();
-    hdc2010_sensor_task();
+      vibrations_alarm();
+      sound_sensor_task();
+      hdc2010_sensor_task();
    }
     return 0;  // never reached
 }

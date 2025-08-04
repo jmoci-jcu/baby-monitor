@@ -60,3 +60,6 @@
 #define BT_GPIO_TX 8
 #define BT_GPIO_RX 9
 #define BT_UART_INSTANCE uart1
+
+// Logger
+#define LOGGER_FLUSH_FREQ_MS 1000
