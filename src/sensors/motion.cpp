@@ -15,8 +15,8 @@ static void motion_gpio_callback(uint gpio, uint32_t events) {
         // confirm we hit the ISR
         printf(">>> PIR rising‑edge! gpio=%u events=0x%08x\n", gpio, events);
         // log your motion alert
-        logger::MotionAlert alert;
-        logger::log(alert);
+        Logger::MotionAlert alert;
+        Logger::log(alert);
     }
 }
 

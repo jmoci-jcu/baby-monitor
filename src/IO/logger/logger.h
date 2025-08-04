@@ -1,10 +1,13 @@
 #include <unordered_map>
 #include <string>
 #include "pico/stdlib.h"
+#include <vector>
 
-namespace logger{
+class Logger{
+public:
+static std::vector<std::string> logBuffer; // Buffer to hold log messages
 
-//Loggable Abstract Class (you can't use this)
+
 class Loggable{
 public:
     virtual std::string getLogString() = 0;
@@ -12,28 +15,28 @@ public:
     std::string classifier;
 };
 //Loggable Concrete Classes (use these)
-class SoundLevelAlert : public logger::Loggable{
+class SoundLevelAlert : public Logger::Loggable{
     public:
     SoundLevelAlert();
     std::string getLogString() override;
 };
-class VibrationLevelAlert : public logger::Loggable{
+class VibrationLevelAlert : public Logger::Loggable{
     public:
     VibrationLevelAlert();
     std::string getLogString() override;
 };
-class MotionAlert : public logger::Loggable{
+class MotionAlert : public Logger::Loggable{
     public:
     MotionAlert();
     std::string getLogString() override;
 };
-class TemperatureLevel : public logger::Loggable{
+class TemperatureLevel : public Logger::Loggable{
     public:
     uint8_t temperature;
     TemperatureLevel(uint8_t temperature);
     std::string getLogString() override;
 };
-class HumidityLevel : public logger::Loggable{
+class HumidityLevel : public Logger::Loggable{
     public:
     uint8_t humidity;
     HumidityLevel(uint8_t humidity);
@@ -47,5 +50,6 @@ class HumidityLevel : public logger::Loggable{
 //SoundLevelAlert logData = SoundLevelAlert(); <- create a SoundLevelAlert
 //log(logData); <- pass into logger
 // WARNING (do not use the line "new SoundLevelAlert()" even if GPT says to)
-void log(Loggable& logData);
-}
+static void log(Loggable& logData);
+static void flushLogBuffer();
+};

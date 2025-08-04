@@ -54,15 +54,13 @@ namespace mic_driver{
     bool monitor_audio_level(float threshold) {
         auto samples = read(DETECTION_WINDOW_SIZE);
         float rms_level = calculate_rms(samples);
-        
+        //printf("RMS Level: %.2f\n", rms_level);
         if (rms_level > threshold) {
             // Log the detection event
-            logger::SoundLevelAlert alert;
-            logger::log(alert);
+            Logger::SoundLevelAlert alert;
+            Logger::log(alert);
             return true;
         }
         return false;
     }
-
-
 }

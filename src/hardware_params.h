@@ -10,7 +10,7 @@
 
 // I2C instance
 #define ACCEL_I2C &i2c0_inst // depricated, use I2c_INSTANCE instead
-#define I2c_INSTANCE i2c0 
+#define I2c_INSTANCE i2c1 
 
 //Accelerometer
 #define ACCEL_I2C &i2c0_inst
