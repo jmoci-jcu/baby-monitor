@@ -10,7 +10,6 @@
 #include "hardware_params.h"
 
 #include "example_scripts/led_example.h"
-#include "example_scripts/accelerometer_example.h"
 
 #include "IO/logger/logger.h"
 #include "drivers/flash/flash.h"
@@ -19,6 +18,9 @@
 #include "sensors/motion.h"
 #include "sensors/hdc2010_sensor.h"
 
+#include "drivers/accelerometer/accelerometer.h"
+
+#include "monitors/vibrations_alarm.h"   // Vibrations alarm header file
 using namespace logger;
 using namespace flashDriver;
 
@@ -29,6 +31,7 @@ int main(){
    stdio_init_all();
    sleep_ms(2000);
    init_motion_sensor();
+   setup_accelerometer();
    UartTerminal::init();
    mic_driver::init(4800);
    hdc2010_sensor_init();
@@ -44,6 +47,7 @@ int main(){
    
    //hang (so interrupts can fire after main has run)
    while(true){
+      vibrations_alarm();
     if (mic_driver::monitor_audio_level(100.0f)) { 
             printf("Baby activity detected!\n");
          }
