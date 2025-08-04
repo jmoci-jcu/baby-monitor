@@ -5,8 +5,12 @@
 #define LED_PIO pio0
 #define LED_GPIO 14
 #define LED_COUNT 12
-#define I2C_SDA_GPIO 16
-#define I2C_SCL_GPIO 17
+#define I2C_SDA_GPIO 2
+#define I2C_SCL_GPIO 3
+
+// I2C instance
+#define ACCEL_I2C &i2c0_inst // depricated, use I2c_INSTANCE instead
+#define I2c_INSTANCE i2c0 
 
 //Accelerometer
 #define ACCEL_I2C &i2c0_inst

@@ -66,6 +66,8 @@ if(CrossCompiling)
         src/drivers/bluetooth/bluetooth.cpp
         src/IO/uart_terminal/uart_terminal.cpp
         src/sensors/motion.cpp
+        src/drivers/HDC2010/hdc2010.cpp
+        src/sensors/hdc2010_sensor.cpp
         src/IO/logger/logger.cpp
     )
     target_include_directories(labs
@@ -104,6 +106,7 @@ if(CrossCompiling)
         hardware_uart
     )
 
+
     pico_add_extra_outputs(labs)
 
 else()
@@ -115,6 +118,9 @@ else()
     project(cc3501-labs CXX)
 
     add_executable(labs)
+
+    target_link_options(labs PRIVATE -Wl,-u,_printf_float)
+    
     target_sources(labs 
         PUBLIC
         src/main.cpp
