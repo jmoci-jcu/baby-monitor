@@ -50,6 +50,7 @@
 #define FLASH_PAGE_WIDTH_BYTES 256
 #define FLASH_BLOCK_WIDTH_BYTES 16*FLASH_PAGE_WIDTH_BYTES
 #define FLASH_BASE (XIP_BASE + FLASH_RESERVED_PROGRAM_BLOCKS * FLASH_BLOCK_WIDTH_BYTES)
+#define FLASH_BLOCK_COUNT 512 // only have access to 2MB of flash, due to value hardcoded to SDK 
 
 //uart
 #define UART_INSTANCE uart0

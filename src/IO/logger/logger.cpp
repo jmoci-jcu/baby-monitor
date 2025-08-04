@@ -66,7 +66,8 @@ std::string Logger::HumidityLevel::getLogString(){
 
 
  void Logger::log(Loggable& logData){
-    logBuffer.push_back(logData.getLogString());
+    //logBuffer.push_back(logData.getLogString());
+    return;
  }
 
     void Logger::flushLogBuffer() {
