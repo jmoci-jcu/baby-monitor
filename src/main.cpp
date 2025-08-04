@@ -4,6 +4,7 @@
 #include <array>
 #include "WS2812.pio.h" // This header file gets produced during compilation from the WS2812.pio file
 #include "drivers/logging/logging.h"
+#include "drivers/microphone/microphone.h"
 #include "lfs.h"
 
 #include "hardware_params.h"
@@ -18,8 +19,10 @@
 #include "sensors/motion.h"
 
 
+
 using namespace logger;
 using namespace flashDriver;
+
 
 int main(){
 
@@ -27,6 +30,7 @@ int main(){
    stdio_init_all();
    init_motion_sensor();
    UartTerminal::init();
+   mic_driver::init(4800);
 
    //test code for logging
    for(int i = 0; i < 10; i++){
@@ -36,7 +40,11 @@ int main(){
    
    //hang (so interrupts can fire after main has run)
    while(true){
-      sleep_ms(1);
+    if (mic_driver::monitor_audio_level(100.0f)) { 
+            printf("Baby activity detected!\n");
+         }
    }
     return 0;  // never reached
 }
+
+
