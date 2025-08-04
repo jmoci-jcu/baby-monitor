@@ -9,8 +9,6 @@
 
 #include "hardware_params.h"
 
-#include "example_scripts/led_example.h"
-
 #include "IO/logger/logger.h"
 #include "drivers/flash/flash.h"
 #include "IO/uart_terminal/uart_terminal.h"
@@ -21,7 +19,7 @@
 
 #include "drivers/accelerometer/accelerometer.h"
 
-#include "monitors/vibrations_alarm.h"   // Vibrations alarm header file
+#include "sensors/vibrations_alarm.h"   // Vibrations alarm header file
 #include "drivers/bluetooth/bluetooth.h"
 
 using namespace flashDriver;
@@ -29,7 +27,7 @@ using namespace flashDriver;
 
 int main(){
 
-   //leave this little block here (put all initialization here)
+   // Put initialization here
    stdio_init_all();
    bluetoothDriver::init();
    init_motion_sensor();
@@ -38,15 +36,15 @@ int main(){
    mic_driver::init(4800);
    hdc2010_sensor_init();
    Logger::init();
-  
    setLogLevel(INFORMATION);
 
    
-   //hang (so interrupts can fire after main has run)
+   // Put tasks here to hook into the main loop
    while(true){
       vibrations_alarm();
       sound_sensor_task();
       hdc2010_sensor_task();
    }
-    return 0;  // never reached
+   
+   return 0;
 }
