@@ -16,11 +16,11 @@ volatile bool end_task = false; // Flag to control the end of a task
 
 void setup_i2c()   
 {
-    i2c_init(I2C_INSTANCE, 400 * 1000);
-    gpio_set_function(SDA_PIN, GPIO_FUNC_I2C);
-    gpio_set_function(SCL_PIN, GPIO_FUNC_I2C);
-    gpio_pull_up(SDA_PIN);
-    gpio_pull_up(SCL_PIN);
+    i2c_init(I2c_INSTANCE, 400 * 1000);
+    gpio_set_function(I2C_SDA_GPIO, GPIO_FUNC_I2C);
+    gpio_set_function(I2C_SCL_GPIO, GPIO_FUNC_I2C);
+    gpio_pull_up(I2C_SDA_GPIO);
+    gpio_pull_up(I2C_SCL_GPIO);
 }
 
 bool setup_accelerometer()
@@ -47,8 +47,8 @@ void read_registers(uint8_t reg, uint8_t *data, int length)
     if (length > 1) {
         reg |= 0b10000000; // Set the read bit for multiple registers
     }
-    i2c_write_blocking(I2C_INSTANCE, ACCEL_I2C_ADDRESS, &reg, 1, true);
-    i2c_read_blocking(I2C_INSTANCE, ACCEL_I2C_ADDRESS, data, length, false);
+    i2c_write_blocking(I2c_INSTANCE, ACCEL_I2C_ADDRESS, &reg, 1, true);
+    i2c_read_blocking(I2c_INSTANCE, ACCEL_I2C_ADDRESS, data, length, false);
 }
 
 
@@ -56,5 +56,5 @@ void read_registers(uint8_t reg, uint8_t *data, int length)
 void write_register(uint8_t reg, uint8_t value)
 {
     uint8_t data[2] = {reg, value};
-    i2c_write_blocking(I2C_INSTANCE, ACCEL_I2C_ADDRESS, data, 2, false);
+    i2c_write_blocking(I2c_INSTANCE, ACCEL_I2C_ADDRESS, data, 2, false);
 }
