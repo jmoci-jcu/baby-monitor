@@ -17,6 +17,7 @@
 
 #include "sensors/motion.h"
 #include "sensors/hdc2010_sensor.h"
+#include "sensors/sound_sensor.h"
 
 #include "drivers/accelerometer/accelerometer.h"
 
@@ -42,11 +43,9 @@ int main(){
    
    //hang (so interrupts can fire after main has run)
    while(true){
-    Logger::flushLogBuffer(); // Flush the log buffer to ensure all logs are sent
+    //Logger::flushLogBuffer(); // Flush the log buffer to ensure all logs are sent
     vibrations_alarm();
-    if (mic_driver::monitor_audio_level(100.0f)) { 
-            printf("Baby activity detected!\n");
-         }
+    sound_sensor_task();
     hdc2010_sensor_task();
    }
     return 0;  // never reached
