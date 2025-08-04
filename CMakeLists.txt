@@ -69,6 +69,7 @@ if(CrossCompiling)
         src/drivers/HDC2010/hdc2010.cpp
         src/sensors/hdc2010_sensor.cpp
         src/IO/logger/logger.cpp
+        src/sensors/sound_sensor.cpp
     )
     target_include_directories(labs
         PUBLIC 

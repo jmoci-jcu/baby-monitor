@@ -10,7 +10,7 @@
 #include "drivers/logging/logging.h"
 #include "drivers/HDC2010/hdc2010.h"
 
-using logger::log;
+
 
 static volatile bool g_sample_due = false;
 static repeating_timer_t g_timer;
@@ -36,14 +36,14 @@ void hdc2010_sensor_task(void) {
         uint8_t temp_int = (uint8_t)(t_c < 0 ? 0 : (t_c > 255 ? 255 : (t_c + 0.5f)));
         uint8_t rh_int   = (uint8_t)(rh   < 0 ? 0 : (rh   > 100 ? 100 : (rh   + 0.5f)));
 
-        logger::TemperatureLevel tlog(temp_int);
-        logger::HumidityLevel hlog(rh_int);
+        Logger::TemperatureLevel tlog(temp_int);
+        Logger::HumidityLevel hlog(rh_int);
 
-        logger::log(tlog);
-        logger::log(hlog);
+        Logger::log(tlog);
+        Logger::log(hlog);
     } else {
-        logger::MotionAlert err;
+        Logger::MotionAlert err;
         err.classifier = "HDC2010 read failed";
-        logger::log(err);
+        Logger::log(err);
     }
 }

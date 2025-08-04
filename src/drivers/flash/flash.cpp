@@ -3,6 +3,7 @@
 
 #include "flash.h"
 #include "hardware_params.h"
+#include "hardware/flash.h""
 
 #define MAX_READ_DEPTH_BYTES 16384 //16kB
 

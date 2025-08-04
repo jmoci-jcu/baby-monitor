@@ -21,7 +21,7 @@ std::string bluetoothDriver::executeCommand(std::string cmd){
     std::string ret = "";
     //todo : uart must be clear for 100ms before entering command mode, 
     //but we may opt for a solution that does not block for 100ms.
-    sleep_ms(100);
+    sleep_ms(150);
     uart_puts(BT_UART_INSTANCE,"$$$");
 
     //wait for 'CMD> '

@@ -4,11 +4,11 @@
 #include <vector>
 #include <numeric>
 
-#include "IO/logger/logger.h"
 #include "drivers/microphone/microphone.h"
 #include "hardware_params.h"
 #include "constants.h"
 #include <cmath>
+#include <cstdio>
 
 const uint16_t DETECTION_WINDOW_SIZE = 512;
 const float RMS_THRESHOLD = 100.0f;
@@ -50,19 +50,13 @@ namespace mic_driver{
         return std::sqrt(sum_of_squares / samples.size());
     }
 
-    // Monitor audio level and log if it exceeds the threshold
+    // Detects if the audio level exceeds the threshold
     bool monitor_audio_level(float threshold) {
         auto samples = read(DETECTION_WINDOW_SIZE);
         float rms_level = calculate_rms(samples);
-        
         if (rms_level > threshold) {
-            // Log the detection event
-            logger::SoundLevelAlert alert;
-            logger::log(alert);
             return true;
         }
         return false;
     }
-
-
 }
