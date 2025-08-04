@@ -4,7 +4,8 @@
 #include "drivers/flash/flash.h"
 #include "drivers/bluetooth/bluetooth.h"
 
-std::vector<std::string> Logger::logBuffer; 
+std::vector<std::string> Logger::logBuffer;
+repeating_timer_t Logger::flushTimerInfo;
 
 Logger::SoundLevelAlert::SoundLevelAlert(){
     classifier = "Sound Threshold";
@@ -63,14 +64,22 @@ std::string Logger::HumidityLevel::getLogString(){
     return result;
 }
 
+bool flushTimerCallback(repeating_timer_t *timer){
+    Logger::flushLogBuffer();
+    return true;
+}
+
+void Logger::init(){
+    add_repeating_timer_ms(LOGGER_FLUSH_FREQ_MS,flushTimerCallback,NULL,&Logger::flushTimerInfo);
+}
 
 
  void Logger::log(Loggable& logData){
-    //logBuffer.push_back(logData.getLogString());
+    logBuffer.push_back(logData.getLogString());
     return;
  }
 
-    void Logger::flushLogBuffer() {
+void Logger::flushLogBuffer() {
     if(bluetoothDriver::executeCommand("GK") != "none"){
         for (int i = 0; i < logBuffer.size(); i++) { 
             std::string logString = logBuffer[i];
@@ -79,8 +88,8 @@ std::string Logger::HumidityLevel::getLogString(){
     
             //bluetooth is connected
             bluetoothDriver::sendLog(logString);
-            //todo check if any logs are stored in flash, if so, send them instead of flush.
-            printf("%s",flashDriver::flushLogs().c_str());
+            std::string logs = flashDriver::flushLogs();
+            bluetoothDriver::sendLog(logs); //can send multiple logs as one separated by \n
         }
     }else{
         //bluetooth is not connected
@@ -88,8 +97,9 @@ std::string Logger::HumidityLevel::getLogString(){
             std::string logString = logBuffer[i];
             flashDriver::writeNewLog(logString);
         }
+        printf("%s\n","Bluetooth Disconnected"); //disable for testing
     }
+    logBuffer.clear();
 
 }
-
     

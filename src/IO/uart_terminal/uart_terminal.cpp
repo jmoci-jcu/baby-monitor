@@ -7,8 +7,8 @@
 std::string UartTerminal::line;
 
 void UartTerminal::onUartRx(){
-   while (uart_is_readable(UART_INSTANCE)) {
-      char c = uart_getc(UART_INSTANCE);
+   while (uart_is_readable(DEBUG_UART)) {
+      char c = uart_getc(DEBUG_UART);
       printf("%c",c);
       if(c=='\r'){
         volatile char buff[10];
@@ -29,7 +29,7 @@ void UartTerminal::onUartRx(){
    }
 }
 void UartTerminal::init(){
-    uart_set_irq_enables(UART_INSTANCE,true,false);
-    irq_set_exclusive_handler(UART_INSTANCE_IRQ,UartTerminal::onUartRx);
-    irq_set_enabled(UART_INSTANCE_IRQ,true);
+    uart_set_irq_enables(DEBUG_UART,true,false);
+    irq_set_exclusive_handler(DEBUG_IRQ,UartTerminal::onUartRx);
+    irq_set_enabled(DEBUG_IRQ,true);
 }
