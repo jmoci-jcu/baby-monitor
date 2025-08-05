@@ -6,21 +6,28 @@
 #include "hardware_params.h"
 #include "accelerometer.h"
 
+//registers
+#define ACCEL_CTRL_REG_1 0x20
+#define ACCEL_FIFO_SRC 0x2F
+#define ACCEL_FIFO_CTRL 0x2E
+#define ACCEL_CTRL_1 0x20
 
-//THIS SECTION GOES IN THE MAIN SECTION, IF YOU WANT TO USE A BUTTON TO SWITCH BETWEEN TASKS
-volatile bool end_task = false; // Flag to control the end of a task
-    void gpio_callback(uint gpio, uint32_t events) {
-        printf("Button pressed! Changing task\n");
-        end_task = true; // Set the flag to end the current task
-    }
+//xyz register addresses for accelerometer
+#define ACCEL_OUT_X_L 0x28
+#define ACCEL_OUT_X_H 0x29
+#define ACCEL_OUT_Y_L 0x2A
+#define ACCEL_OUT_Y_H 0x2B
+#define ACCEL_OUT_Z_L 0x2C
+#define ACCEL_OUT_Z_H 0x2D
+
 
 void setup_i2c()   
 {
-    i2c_init(I2C_INSTANCE, 400 * 1000);
-    gpio_set_function(SDA_PIN, GPIO_FUNC_I2C);
-    gpio_set_function(SCL_PIN, GPIO_FUNC_I2C);
-    gpio_pull_up(SDA_PIN);
-    gpio_pull_up(SCL_PIN);
+    i2c_init(I2C_INSTANCE, 400 * 1000); //this will get called twice but that is fine
+    gpio_set_function(I2C_SDA_GPIO, GPIO_FUNC_I2C);
+    gpio_set_function(I2C_SCL_GPIO, GPIO_FUNC_I2C);
+    gpio_pull_up(I2C_SDA_GPIO);
+    gpio_pull_up(I2C_SCL_GPIO);
 }
 
 bool setup_accelerometer()
@@ -47,8 +54,8 @@ void read_registers(uint8_t reg, uint8_t *data, int length)
     if (length > 1) {
         reg |= 0b10000000; // Set the read bit for multiple registers
     }
-    i2c_write_blocking(I2C_INSTANCE, ACCEL_I2C_ADDRESS, &reg, 1, true);
-    i2c_read_blocking(I2C_INSTANCE, ACCEL_I2C_ADDRESS, data, length, false);
+    i2c_write_blocking(I2C_INSTANCE, ACCEL_SDA, &reg, 1, true);
+    i2c_read_blocking(I2C_INSTANCE, ACCEL_SDA, data, length, false);
 }
 
 
@@ -56,5 +63,5 @@ void read_registers(uint8_t reg, uint8_t *data, int length)
 void write_register(uint8_t reg, uint8_t value)
 {
     uint8_t data[2] = {reg, value};
-    i2c_write_blocking(I2C_INSTANCE, ACCEL_I2C_ADDRESS, data, 2, false);
+    i2c_write_blocking(I2C_INSTANCE, ACCEL_SDA, data, 2, false);
 }
