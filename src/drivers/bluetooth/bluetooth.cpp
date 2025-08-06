@@ -11,6 +11,8 @@ void bluetoothDriver::init(){
     gpio_set_function(BT_GPIO_TX,GPIO_FUNC_UART);
     gpio_set_function(BT_GPIO_RX,GPIO_FUNC_UART);
     uart_init(BT_UART_INSTANCE,115200);
+    sleep_ms(100); //executeCommand needs clear line for 100ms. It is fine to sleep in init.
+    bluetoothDriver::executeCommand("NA,06,55E405D2AF9FA98FE54A7DFE43535349");
 }
 
 /*This function must be called no more than once every 100ms*/
