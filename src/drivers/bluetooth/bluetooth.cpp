@@ -11,17 +11,19 @@ void bluetoothDriver::init(){
     gpio_set_function(BT_GPIO_TX,GPIO_FUNC_UART);
     gpio_set_function(BT_GPIO_RX,GPIO_FUNC_UART);
     uart_init(BT_UART_INSTANCE,115200);
+    sleep_ms(100); //executeCommand needs clear line for 100ms. It is fine to sleep in init.
+    bluetoothDriver::executeCommand("NA,06,55E405D2AF9FA98FE54A7DFE43535349");
 }
 
+/*This function must be called no more than once every 100ms*/
 void bluetoothDriver::sendLog(std::string log){
     uart_puts(BT_UART_INSTANCE,log.c_str());
 }
 
+/*This function requires a clear line for 100ms before being called. 
+Beware if sending data without using the sendLog function*/
 std::string bluetoothDriver::executeCommand(std::string cmd){
     std::string ret = "";
-    //todo : uart must be clear for 100ms before entering command mode, 
-    //but we may opt for a solution that does not block for 100ms.
-    sleep_ms(150);
     uart_puts(BT_UART_INSTANCE,"$$$");
 
     //wait for 'CMD> '

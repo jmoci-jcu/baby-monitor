@@ -50,6 +50,10 @@ class HumidityLevel : public Logger::Loggable{
 //SoundLevelAlert logData = SoundLevelAlert(); <- create a SoundLevelAlert
 //log(logData); <- pass into logger
 // WARNING (do not use the line "new SoundLevelAlert()" even if GPT says to)
+static void init();
 static void log(Loggable& logData);
 static void flushLogBuffer();
+
+private:
+static repeating_timer_t flushTimerInfo;
 };

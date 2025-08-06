@@ -18,7 +18,7 @@ void sound_sensor_init() {
 
 // Function to monitor audio levels and check if they exceed a given threshold
 bool monitor_audio_level(float threshold) {
-    // Read samples from the microphone and calculate RMS
+    // Read samples and RMS from microphone driver
     std::vector<uint16_t> samples = mic_driver::read(DETECTION_WINDOW_SIZE);
     if (samples.empty()) {
         return false; // No samples read
