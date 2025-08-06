@@ -11,7 +11,7 @@
 #include <cstdio>
 
 const uint16_t DETECTION_WINDOW_SIZE = 512;
-const float RMS_THRESHOLD = 100.0f;
+const float RMS_THRESHOLD = 250.0f;
 const uint16_t DC_BIAS = 2048;
 
 namespace mic_driver{
